@@ -20,21 +20,20 @@ install:
   - go get -d ./src/*
   - pwd
   - ls -a ./src
-  - export FINAL=`pwd`/dist/xmain
-  - go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
-  - ls -alh dist
-  - ls -alh $FINAL
-
-before_deploy:
-  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then zip $FINAL.zip $FINAL    ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then /c/Program\ Files/7-Zip/7z.exe a $APP.zip ${APP}.exe    ; fi
-
+  - GOOS=darwin GOARCH=amd64 go build -o dist/x-installer.mac-x64 -ldflags="-s -w" src/xmain/*.go
+  - GOOS=linux GOARCH=amd64 go build -o dist/x-installer.linux-x64 -ldflags="-s -w" src/xmain/*.go
+  - GOOS=linux GOARCH=arm go build -o dist/x-installer.linux-arm -ldflags="-s -w" src/xmain/*.go
+  - GOOS=windows GOARCH=amd64 go build -o dist/x-installer.windows.exe -ldflags="-s -w" src/xmain/*.go
 
 deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
-  file: $FINAL.zip
-  file: $FINAL
+  file: 
+    - dist/x-installer.mac-x64
+    - dist/x-installer.linux-x64
+    - dist/x-installer.linux-arm
+    - dist/x-installer.windows.exe
+
   skip_cleanup: true
   on:
     tags: false      # only deploy tag commit
