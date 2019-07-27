@@ -13,7 +13,7 @@ os:
 
 install:
   - cd project/go
-  - export TRAVIS_TAG=latest
+  - export TRAVIS_TAG=latest-dev
   - export GOPATH=$GOPATH:`pwd`
   - rm -rf src/github.com; 
   - GOOS=darwin GOARCH=amd64 go get -d ./src/*
