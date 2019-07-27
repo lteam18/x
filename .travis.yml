@@ -18,12 +18,17 @@ os:
 install:
   - cd project/go
   - export GOPATH=$GOPATH:`pwd`
-  - go get -d ./src/*
-  - pwd
-  - ls -a ./src
+  - rm -rf src/github.com; 
+  - GOOS=darwin GOARCH=amd64 go get -d ./src/*
   - GOOS=darwin GOARCH=amd64 go build -o dist/x-installer.mac-x64 -ldflags="-s -w" src/xmain/*.go
+  - rm -rf src/github.com; 
+  - GOOS=linux GOARCH=amd64 go get -d ./src/*
   - GOOS=linux GOARCH=amd64 go build -o dist/x-installer.linux-x64 -ldflags="-s -w" src/xmain/*.go
+  - rm -rf src/github.com; 
+  - GOOS=linux GOARCH=arm go get -d ./src/*
   - GOOS=linux GOARCH=arm go build -o dist/x-installer.linux-arm -ldflags="-s -w" src/xmain/*.go
+  - rm -rf src/github.com; 
+  - GOOS=windows GOARCH=amd64 go get -d ./src/*
   - GOOS=windows GOARCH=amd64 go build -o dist/x-installer.windows.exe -ldflags="-s -w" src/xmain/*.go
 
 deploy:
