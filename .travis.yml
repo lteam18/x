@@ -16,9 +16,10 @@ os:
 
 install:
   - cd project/go
-  - GOPATH="`pwd`" go get -d ./src/*
+  - export GOPATH=$GOPATH:`pwd`
+  - go get -d ./src/*
   - ls -a ./src
-  - GOPATH="`pwd`" go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
+  - go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
 
 deploy:
   provider: releases
