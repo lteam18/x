@@ -22,12 +22,18 @@ install:
   - ls -a ./src
   - export FINAL=`pwd`/dist/xmain
   - go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
+  - ls -alh dist
   - ls -alh $FINAL
+
+before_deploy:
+  - if [ "$TRAVIS_OS_NAME" != "windows" ]; then zip $FINAL.zip $FINAL    ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then /c/Program\ Files/7-Zip/7z.exe a $APP.zip ${APP}.exe    ; fi
+
 
 deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
-  file: $FINAL
+  file: $FINAL.zip
   skip_cleanup: false
   on:
     tags: false      # only deploy tag commit
