@@ -1,0 +1,32 @@
+language: go
+
+go:
+  - 1.9
+
+# only run build on master and tag
+branches:
+  only:
+  - master
+
+env:
+  - APP=$TRAVIS_OS_NAME.exe
+
+os:
+  - linux
+  - osx
+  - windows
+
+install:
+  - cd go
+  - . dev.sh
+  - install
+  - dist
+
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN  # set in travis website
+  file: $APP.zip
+  skip_cleanup: false
+  on:
+    tags: true      # only deploy tag commit
+
