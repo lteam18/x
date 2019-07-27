@@ -27,5 +27,5 @@ deploy:
   file: project/go/dist/xmain
   skip_cleanup: false
   on:
-    tags: true      # only deploy tag commit
+    tags: false      # only deploy tag commit
 
