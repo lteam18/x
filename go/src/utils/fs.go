@@ -26,7 +26,7 @@ func ReadFile(filepath string) string {
 }
 
 /*
-IsFileExisted: execute command
+IsFileExisted execute command
 */
 func IsFileExisted(filepath string) bool {
 	// println(filepath)
