@@ -17,7 +17,7 @@ os:
   - windows
 
 install:
-  - cd go
+  - cd project/go
   - . dev.sh
   - install
   - dist
