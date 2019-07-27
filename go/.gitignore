@@ -1,0 +1,5 @@
+build
+dist
+pkg
+src/github.com
+src/golang.org
