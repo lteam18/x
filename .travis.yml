@@ -21,8 +21,8 @@ install:
   - pwd
   - ls -a ./src
   - export FINAL=`pwd`/dist/xmain
-  - ls -alh $FINAL
   - go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
+  - ls -alh $FINAL
 
 deploy:
   provider: releases
