@@ -10,6 +10,7 @@ branches:
 
 env:
   - APP=$TRAVIS_OS_NAME.exe
+  - TRAVIS_TAG=latest
 
 os:
   - linux
