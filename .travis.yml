@@ -18,13 +18,15 @@ install:
   - cd project/go
   - export GOPATH=$GOPATH:`pwd`
   - go get -d ./src/*
+  - pwd
   - ls -a ./src
+  - export FINAL=`pwd`/dist/xmain
   - go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
 
 deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
-  file: ./dist/xmain
+  file: $FINAL
   skip_cleanup: false
   on:
     tags: false      # only deploy tag commit
