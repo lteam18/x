@@ -34,7 +34,8 @@ deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
   file: $FINAL.zip
-  skip_cleanup: false
+  file: $FINAL
+  skip_cleanup: true
   on:
     tags: false      # only deploy tag commit
 
