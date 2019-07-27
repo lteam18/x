@@ -39,5 +39,5 @@ deploy:
 
   skip_cleanup: true
   on:
-    tags: false      # only deploy tag commit
+    tags: true      # only deploy tag commit
 
