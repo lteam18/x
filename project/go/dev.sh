@@ -11,7 +11,8 @@ build(){
 # https://blog.filippo.io/shrink-your-go-binaries-with-this-one-weird-trick/
 
 dist(){
-    GOPATH="`pwd`" go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
+    GOPATH="`pwd`" go build -o dist/xmain src/xmain/*.go
+    # GOPATH="`pwd`" go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
 }
 
 dist.linux(){

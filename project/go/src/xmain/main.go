@@ -109,6 +109,10 @@ func work() {
 		VvkvClient.SetPermissionBYVVURL(vvurl, isPublic)
 
 	case "share":
+		if len(os.Args) == 2 {
+			println("Please provide keypath.\nx share [@org/keypath]")
+			return
+		}
 		vvurl := os.Args[2]
 		url := VvkvClient.Share(vvurl, 24*60*60)
 		println("Generate url for 1 day")
