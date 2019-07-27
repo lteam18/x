@@ -13,19 +13,16 @@ env:
 
 os:
   - linux
-  - osx
-  - windows
 
 install:
   - cd project/go
-  - . dev.sh
-  - install
-  - dist
+  - GOPATH="`pwd`" go get -d ./src/*
+  - GOPATH="`pwd`" go build -o dist/xmain -ldflags="-s -w" src/xmain/*.go
 
 deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
-  file: $APP.zip
+  file: project/go/dist/xmain
   skip_cleanup: false
   on:
     tags: true      # only deploy tag commit
