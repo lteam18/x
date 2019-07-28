@@ -15,6 +15,7 @@ install:
   - echo "ignore"
 
 script:
+  - TRAVIS_TAG=latest-dev
   - cd project/go
   - GOPATH=`pwd`
   - bash dev.sh dist.all
