@@ -16,6 +16,10 @@ install:
   - GOPATH=`pwd`
   - bash dev.sh dist.all
 
+before-deploy:
+  - rm -rf src/github.com src/golang.org
+  - go get -d ./src/*
+
 deploy:
   provider: releases
   api_key: $GH_TOKEN  # set in travis website
