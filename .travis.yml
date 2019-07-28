@@ -14,8 +14,6 @@ os:
 install:
   - cd project/go
   - GOPATH=$GOPATH:`pwd`
-  - source dev.sh
-  - cat dev.sh
   - bash dev.sh dist.all
 
 deploy:
