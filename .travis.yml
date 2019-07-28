@@ -13,7 +13,7 @@ os:
 
 install:
   - cd project/go
-  - GOPATH=$GOPATH:`pwd`
+  - GOPATH=`pwd`
   - bash dev.sh dist.all
 
 deploy:
