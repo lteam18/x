@@ -11,14 +11,10 @@ branches:
 os:
   - linux
 
-install:
+script:
   - cd project/go
   - GOPATH=`pwd`
   - bash dev.sh dist.all
-
-before-deploy:
-  - rm -rf src/github.com src/golang.org
-  - go get -d ./src/*
 
 deploy:
   provider: releases
