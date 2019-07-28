@@ -35,10 +35,10 @@ dist.arch(){
 dist.all(){
     echo "dist.all with GOPATH: $GOPATH"
     dist.arch darwin amd64
-    dist.arch linux amd64
+    dist.arch windows amd64
     dist.arch linux arm
     dist.arch linux arm64
-    dist.arch windows amd64
+    dist.arch linux amd64 # Must be the last one. For travis build test
 }
 
 dist.all.mac(){
