@@ -11,6 +11,9 @@ branches:
 os:
   - linux
 
+install:
+  - echo "ignore"
+
 script:
   - cd project/go
   - GOPATH=`pwd`
