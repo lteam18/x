@@ -1,0 +1,29 @@
+language: go
+
+go:
+  - 1.9
+
+# only run build on master and tag
+branches:
+  only:
+  - master
+
+os:
+  - linux
+
+install:
+  - cd project/go
+  - GOPATH=$GOPATH:`pwd`
+  - . dev.sh
+  - cat dev.sh
+  - bash dev.sh dist.all
+
+deploy:
+  provider: releases
+  api_key: $GH_TOKEN  # set in travis website
+  file: dist/*
+  overwrite: true
+  skip_cleanup: true
+  on:
+    tags: true      # only deploy tag commit
+
