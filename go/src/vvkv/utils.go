@@ -3,6 +3,7 @@ package vvkv
 import (
 	"debuglog"
 	"os/user"
+	"path"
 	"strings"
 	ut "utils"
 )
@@ -20,7 +21,7 @@ func getHomeDir() string {
 /*
 AppPath Pre
 */
-var XPath = getHomeDir() + "/.vvx"
+var XPath = path.Clean(getHomeDir() + "/.vvx")
 
 /*
 AppDirPath Pre
@@ -43,6 +44,8 @@ PrefixFilePath Pre
 var PrefixFilePath = XPath + "/PREFIX"
 
 func init() {
+
+	// TODO: what if it is an android environment. HomeDir = /
 	ut.Mkdirp(AppDirPath, AppFlatDirPath, AppIdxDirPath)
 
 	if !ut.IsFileExisted(PrefixFilePath) {

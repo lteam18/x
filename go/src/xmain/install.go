@@ -1,18 +1,21 @@
 package main
 
 import (
+	"nosh"
 	"os"
 	"path"
 	"runtime"
 	ut "utils"
+	"vvkv"
 )
 
+// Which to install
 func normalizeFolder(folder *string) string {
 	if nil != folder {
 		return *folder
 	}
 	if runtime.GOOS == "windows" {
-		// TODO
+		// TODO: which env?
 		return "c:/"
 	}
 	return "/usr/local/bin"
@@ -38,7 +41,7 @@ func install(targetFolder *string, execName *string) {
 		normalizeFolder(targetFolder),
 		normalizeExecName(execName),
 	)
-	println("Installing x to: newFilePath")
+	println("Installing x to: " + newFilePath)
 
 	installToDst(newFilePath)
 }
@@ -52,3 +55,5 @@ func installToDst(newFilePath string) {
 	}
 	println("Install success.")
 }
+
+var noshexe = nosh.Create(path.Join(vvkv.XPath, "bin", "nosh"))

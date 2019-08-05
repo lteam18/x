@@ -68,7 +68,7 @@ func (client *Client) getToLocalDisk(url string, dst string, dstForIdx string) *
 	ut.HandleError(err)
 
 	ut.Mkdirp(path.Dir(dst))
-	unzipOneFile(temppath.Name(), dst)
+	UnzipOneFile(temppath.Name(), dst)
 	defer os.Remove(temppath.Name())
 
 	meta := resp.Header.Get("x-vvkv-m")
