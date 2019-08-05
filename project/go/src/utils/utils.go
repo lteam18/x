@@ -89,3 +89,13 @@ func FromHTTPUrl(url, dst string) {
 	io.Copy(f, res.Body)
 }
 */
+
+/*
+SliceOrEmpty a
+*/
+func SliceOrEmpty(data []string, start int) []string {
+	if len(data) > start {
+		return data[start:]
+	}
+	return []string{}
+}

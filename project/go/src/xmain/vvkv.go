@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
 	ut "utils"
 	"vvkv"
 )
@@ -80,6 +81,10 @@ func printLsSimple(vvurl string) {
 	for _, v := range ret {
 		fmt.Printf("%s\t%d\t%s\n", v.LastModified, v.Size, v.Name)
 	}
+}
+
+func isLikeVVURL(vvurl string) bool {
+	return strings.HasPrefix(vvurl, "@") && strings.Index(vvurl, "/") >= 0
 }
 
 type urlType struct {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os/exec"
 	"path"
 	"strings"
 )
@@ -24,20 +23,25 @@ var engineCat = Engine("cat")
 var engineAuto = Engine("auto")
 
 func init() {
+
 	SubCmd2Runtime["python"] = Engine("python")
 	SubCmd2Runtime["perl"] = Engine("perl")
 	SubCmd2Runtime["bash"] = Engine("bash")
 	SubCmd2Runtime["fish"] = Engine("fish")
 	SubCmd2Runtime["jar"] = Engine("jar")
-	SubCmd2Runtime["vvsh"] = Engine("vvsh")
+
+	SubCmd2Runtime["nosh"] = Engine("nosh")
+
+	SubCmd2Runtime["js"] = Engine("nosh-js")
+	SubCmd2Runtime["ts"] = Engine("nosh-ts")
+
 	SubCmd2Runtime["node"] = Engine("node")
 	SubCmd2Runtime["cat"] = Engine("cat")
 
 	// shortcut
 	SubCmd2Runtime["py"] = SubCmd2Runtime["python"]
 	SubCmd2Runtime["pl"] = SubCmd2Runtime["perl"]
-	SubCmd2Runtime["js"] = SubCmd2Runtime["vvsh"]
-	SubCmd2Runtime["ts"] = SubCmd2Runtime["vvsh"]
+
 	SubCmd2Runtime["sh"] = SubCmd2Runtime["bash"]
 }
 
@@ -80,15 +84,16 @@ func parseEngineByExt(filepath string) (string, bool) {
 /*
 ExecuteBySubCmd execute command
 */
-func ExecuteBySubCmd(subCmd string, args []string) *exec.Cmd {
+func ExecuteBySubCmd(subCmd string, args []string) bool {
 	updateFirst := false
 	if strings.HasSuffix(subCmd, "!") {
 		subCmd = subCmd[0 : len(subCmd)-1]
 		updateFirst = true
 	}
 	engine, ok := SubCmd2Runtime[subCmd]
+	log.WithField("subcmd", subCmd).WithField("engine", engine).Infoln("subcmd ready")
 	if ok {
 		return ExecuteURIWithComplement(updateFirst, true, engine, args)
 	}
-	return nil
+	return false
 }

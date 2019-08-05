@@ -53,7 +53,10 @@ func unzip(src, dest string) error {
 	return nil
 }
 
-func unzipOneFile(src, dest string) error {
+/*
+UnzipOneFile a
+*/
+func UnzipOneFile(src, dest string) error {
 	r, err := zip.OpenReader(src)
 	if err != nil {
 		return err

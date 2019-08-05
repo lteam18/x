@@ -20,7 +20,8 @@ dist.linux(){
 }
 
 dist.arch(){
-    rm -rf src/github.com src/golang.org
+    rm -rf src/github.com
+    rm -rf src/golang.org
     GOOS=${1:?"GOOS?"}
     GOARCH=${2:?"GOARCH?"}
     echo Building $GOOS-$GOARCH
@@ -29,16 +30,16 @@ dist.arch(){
     if [ "windows" == "$GOOS" ]; then
         OUTPUT=x-installer.$GOOS-$GOARCH.exe
     fi
-    GOPATH=`pwd` go build -o ./dist/$OUTPUT ./src/xmain/*.go
+    GOPATH=`pwd` GOOS=${1:?"GOOS?"} GOARCH=${2:?"GOARCH?"} go build -o ./dist/$OUTPUT ./src/xmain/*.go
 }
 
 dist.all(){
     echo "dist.all with GOPATH: $GOPATH"
-    dist.arch darwin amd64
     dist.arch windows amd64
     dist.arch linux arm
     dist.arch linux arm64
     dist.arch linux amd64 # Must be the last one. For travis build test
+    dist.arch darwin amd64
 }
 
 dist.all.mac(){
