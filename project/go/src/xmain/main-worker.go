@@ -11,9 +11,9 @@ import (
 	"github.com/urfave/cli"
 )
 
-var installCmd = cli.Command{
+var installXCmd = cli.Command{
 	Name:  "install-x",
-	Usage: `install`,
+	Usage: "`x install-x`",
 	Action: func(context *cli.Context) error {
 		if len(context.Args()) < 1 {
 			install(nil, nil)
@@ -24,9 +24,10 @@ var installCmd = cli.Command{
 	},
 }
 
-var installAllCmd = cli.Command{
-	Name:  "install",
-	Usage: `install`,
+var installCmd = cli.Command{
+	Name:    "install",
+	Usage:   "`x install`",
+	Aliases: []string{"install-all"},
 	Action: func(context *cli.Context) error {
 		if len(context.Args()) < 1 {
 			install(nil, nil)
@@ -158,7 +159,8 @@ var runCmd = cli.Command{
 }
 
 var cmdCmd = cli.Command{
-	Name: "cmd",
+	Name:  "cmd",
+	Usage: "x --retry 1 --interval 10 cmd ping www.bing.com",
 	Action: func(ctx *cli.Context) error {
 		if len(ctx.Args()) == 0 {
 			return fmt.Errorf("please provide commands")
@@ -281,7 +283,6 @@ VERSION:
 `
 
 	app.Commands = []cli.Command{
-		installCmd,
 		tokenCmd,
 		tokenApplyCmd,
 		tokenSetCmd,
@@ -294,25 +295,28 @@ VERSION:
 		shareCmd,
 		setAccessCmd,
 		uploadCmd,
+		installCmd,
+		installXCmd,
 		installNoshCmd,
-		installAllCmd,
 		updateNoshCmd,
 	}
 
-	app.Flags = []cli.Flag{
-		cli.Int64Flag{
-			Name:        "interval",
-			Value:       3000,
-			Usage:       "Interval",
-			Destination: &ArgInterval,
-		},
-		cli.IntFlag{
-			Name:        "retry",
-			Value:       0,
-			Usage:       "max retry times",
-			Destination: &ArgRetry,
-		},
-	}
+	/*
+		app.Flags = []cli.Flag{
+			cli.Int64Flag{
+				Name:        "interval",
+				Value:       3000,
+				Usage:       "Interval",
+				Destination: &ArgInterval,
+			},
+			cli.IntFlag{
+				Name:        "retry",
+				Value:       0,
+				Usage:       "max retry times",
+				Destination: &ArgRetry,
+			},
+		}
+	*/
 
 	app.Action = func(ctx *cli.Context) error {
 

@@ -93,6 +93,7 @@ func ExecuteBySubCmd(subCmd string, args []string) bool {
 	engine, ok := SubCmd2Runtime[subCmd]
 	log.WithField("subcmd", subCmd).WithField("engine", engine).Infoln("subcmd ready")
 	if ok {
+		// What if subCmd is empty, just open the REPL perhaps ?
 		return ExecuteURIWithComplement(updateFirst, true, engine, args)
 	}
 	return false
