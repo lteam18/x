@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -113,6 +114,13 @@ var tokenDecryptCmd = cli.Command{
 		tokenObj := VvkvClient.DecryptToken(token)
 		tokenStr := ut.PrettifyJSONString(tokenObj)
 		println(tokenStr)
+
+		amap := make(map[string]interface{})
+		json.Unmarshal([]byte(tokenObj), &amap)
+		time1 := int64(amap["expired"].(float64))
+
+		fmt.Println("Expired At: " + time.Unix(time1, 0).Format("2006-01-02 03:04:05 PM"))
+
 		return nil
 	},
 }
@@ -190,8 +198,14 @@ var shareCmd = cli.Command{
 			return fmt.Errorf("please provice [vvurl]")
 		}
 		vvurl := ctx.Args().Get(0)
-		url := VvkvClient.Share(vvurl, 24*60*60)
-		println("Generate url for 1 day")
+
+		seconds := int64(24 * 60 * 60)
+		if len(ctx.Args()) == 1 {
+			println("Generate url for 1 day")
+		} else {
+			seconds = ut.DateStr2Seconds(ctx.Args().Get(1))
+		}
+		url := VvkvClient.Share(vvurl, seconds)
 		println(url)
 		return nil
 	},
