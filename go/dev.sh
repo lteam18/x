@@ -22,15 +22,17 @@ dist.linux(){
 dist.arch(){
     rm -rf src/github.com
     rm -rf src/golang.org
-    GOOS=${1:?"GOOS?"}
-    GOARCH=${2:?"GOARCH?"}
-    echo Building $GOOS-$GOARCH
-    GOPATH=`pwd` go get -d ./src/*
+    export GOPATH=`pwd`
+    export GOOS=${1:?"GOOS?"}
+    export GOARCH=${2:?"GOARCH?"}
+    echo "---------------"
+    echo Building $GOOS-$GOARCH $GOPATH
+    go get -d ./src/*
     local OUTPUT=x-installer.$GOOS-$GOARCH
     if [ "windows" == "$GOOS" ]; then
         OUTPUT=x-installer.$GOOS-$GOARCH.exe
     fi
-    GOPATH=`pwd` GOOS=${1:?"GOOS?"} GOARCH=${2:?"GOARCH?"} go build -o ./dist/$OUTPUT ./src/xmain/*.go
+    go build -o ./dist/$OUTPUT ./src/xmain/*.go
 }
 
 dist.all(){
