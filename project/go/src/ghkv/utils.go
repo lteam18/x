@@ -8,7 +8,7 @@ import (
 
 var log = debuglog.Create("ghkv")
 
-var CODE_REPO = "source.x-cmd.com"
+var CODE_REPO = "x-cmd.com"
 
 /*
 CreateGitFile c
