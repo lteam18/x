@@ -5,6 +5,7 @@ package ut
 import (
 	"regexp"
 	"strconv"
+	"strings"
 )
 
 func getFrom(sym string, target string) int {
@@ -28,6 +29,7 @@ func getFrom(sym string, target string) int {
 DateStr2Seconds a
 */
 func DateStr2Seconds(str string) int64 {
+	str = strings.ToUpper(str)
 	years := getFrom("Y", str)
 	months := getFrom("M", str)
 	days := getFrom("D", str)

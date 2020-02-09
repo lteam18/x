@@ -2,7 +2,9 @@ package ut
 
 import (
 	"crypto/md5"
+	"crypto/sha1"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"net/http"
@@ -60,24 +62,51 @@ func IfThenElse(condition bool, a interface{}, b interface{}) interface{} {
 /*
 CalMd5 cal md5
 */
+func CalMd5FromBytes(str []byte) string {
+	return fmt.Sprintf("%x", md5.Sum(str))
+}
+
+/*
+CalMd5 cal md5
+*/
 func CalMd5(str string) string {
 	return fmt.Sprintf("%x", md5.Sum([]byte(str)))
 }
 
 /*
+CalSha1 cal sha1
+*/
+func CalSHA1(str string) string {
+	return fmt.Sprintf("%x", sha1.Sum([]byte(str)))
+}
+
+/*
 HTTPCat http cat
 */
-func HTTPCat(url string, dstPath string) {
+func HTTPCat(url string, dstPath string) error {
 
 	req, _ := http.NewRequest("GET", url, nil)
 
 	cli := &http.Client{}
-	resp, _ := cli.Do(req)
+	resp, err := cli.Do(req)
+
+	if err != nil {
+		return err
+	}
+
+	if resp.StatusCode >= 300 {
+		return errors.New(resp.Status)
+	}
 
 	f, ferr := os.Create(dstPath)
-	HandleError(ferr)
-	_, copyError := io.Copy(f, resp.Body)
-	HandleError(copyError)
+	if ferr != nil {
+		return ferr
+	}
+
+	if _, copyError := io.Copy(f, resp.Body); copyError != nil {
+		return copyError
+	}
+	return nil
 }
 
 /*

@@ -26,6 +26,15 @@ func ReadFile(filepath string) string {
 }
 
 /*
+ReadFileToBytes writeFileSync
+*/
+func ReadFileToBytes(filepath string) []byte {
+	dat, err := ioutil.ReadFile(filepath)
+	PanicError(err)
+	return dat
+}
+
+/*
 IsFileExisted execute command
 */
 func IsFileExisted(filepath string) bool {

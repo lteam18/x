@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"strings"
@@ -21,12 +20,13 @@ var VvkvClient = vvkv.CreateClient(url)
 Meta a
 */
 type Meta struct {
-	CodeType string `json:"codetype"`
-	IsURL    bool   `json:"isURL"`
+	CodeType string  `json:"codetype"`
+	IsURL    bool    `json:"isURL"`
+	URL      *string `json:"url"`
 }
 
 func upload(src string, vvurl string, isPublic bool, codetype string, isURL bool) {
-	meta := &Meta{codetype, isURL}
+	meta := &Meta{codetype, isURL, nil}
 	st, _ := json.Marshal(meta)
 
 	info := make(map[string]string)
@@ -41,7 +41,7 @@ func uploadCode(src string, vvurl string, isPublic bool, codetype string) {
 }
 
 type linkType struct {
-	URL string `json:"url"`
+	URL *string `json:"url"`
 }
 
 func readLink(src string) linkType {
@@ -55,7 +55,7 @@ func uploadLink(srcLink string, vvurl string, isPublic bool, codetype string) {
 	ut.HandleError(temppathErr)
 	defer os.Remove(temppath.Name())
 
-	st, err := json.MarshalIndent(&linkType{srcLink}, "", "  ")
+	st, err := json.MarshalIndent(&linkType{&srcLink}, "", "  ")
 	ut.HandleError(err)
 	ut.WriteFileSync(temppath.Name(), string(st))
 
@@ -73,13 +73,13 @@ func printLs(vvurl string, detail bool) {
 func printLsAll(vvurl string) {
 	ret := VvkvClient.ListVVURL(vvurl)
 	st, _ := json.MarshalIndent(ret, "", "  ")
-	fmt.Println(string(st))
+	writeResult(string(st))
 }
 
 func printLsSimple(vvurl string) {
 	ret := VvkvClient.ListVVURL(vvurl)
 	for _, v := range ret {
-		fmt.Printf("%s\t%d\t%s\n", v.LastModified, v.Size, v.Name)
+		writeResult("%s\t%d\t%s\n", v.LastModified, v.Size, v.Name)
 	}
 }
 
