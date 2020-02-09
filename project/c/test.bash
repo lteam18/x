@@ -1,1 +1,0 @@
-echo Hello, environmental varaible A is: ${A:-NONE}

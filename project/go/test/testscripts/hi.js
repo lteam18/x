@@ -1,1 +1,0 @@
-console.log("hi", process.argv.slice(2))
