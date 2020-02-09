@@ -36,10 +36,14 @@ dist.arch(){
     if [ "windows" == "$GOOS" ]; then
         OUTPUT=x-installer.$GOOS-$GOARCH.exe
     fi
-    go build -o "./dist/$OUTPUT" ./src/xmain/*.go
+    go build -ldflags="-s -w" -o "./dist/$OUTPUT" ./src/xmain/*.go
+    upx "./dist/$OUTPUT"
 }
 
 dist.all(){
+    command -v upx || (
+        apt update && apt install upx -y
+    )
     echo "dist.all with GOPATH: $GOPATH"
     dist.arch windows amd64
     dist.arch linux arm
