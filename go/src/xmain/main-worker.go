@@ -295,6 +295,15 @@ var updateCmd = cli.Command{
 	},
 }
 
+var upgradeCmd = cli.Command{
+	Name:  "upgrade",
+	Usage: "`x upgrade`",
+	Action: func(ctx *cli.Context) error {
+		log.Info("Please wait. Upgrading X...")
+		return upgrade()
+	},
+}
+
 var shareCmd = cli.Command{
 	Name:  "share",
 	Usage: "Generate the url avaiable for 1 day: `x share @dryrun/work`",
@@ -501,6 +510,7 @@ var testCmd = cli.Command{
 	Usage: "`x test`",
 	Action: func(ctx *cli.Context) error {
 		// fmt.Println(gh.EnablePages("edwinjhlee", CODE_REPO))
+		writeResult("test")
 		return nil
 	},
 }
@@ -561,6 +571,8 @@ VERSION:
 		&execCmd,
 
 		&updateCmd,
+		&upgradeCmd,
+
 		&shareCmd,
 		&setAccessCmd,
 		&uploadCmd,

@@ -46,6 +46,15 @@ func install(targetFolder *string, execName *string) {
 	installToDst(newFilePath)
 }
 
+func upgrade() error {
+	// Download From Github into temporary folder
+	curFilePath, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	return nosh.DownloadX(curFilePath)
+}
+
 func installToDst(newFilePath string) {
 	curFilePath, _ := os.Executable()
 	err := ut.CopyFile(curFilePath, newFilePath)
