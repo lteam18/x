@@ -1,0 +1,69 @@
+{
+  "name": "vvsh",
+  "version": "0.1.0",
+  "description": "",
+  "bin": {
+    "vvsh": "./bin/vvsh.sh"
+  },
+  "main": "dist/main.js",
+  "typings": "dist/main.d.ts",
+  "scripts": {
+    "pkg": "pkg dist/main.js --options no-warnings -o bin/pkg/vvsh.linux.exe -c package.json",
+    "pkg-linux": "mkdir -p bin/pkg && npm run pkg && cd bin/pkg && zip vvsh.linux.exe.zip vvsh.linux.exe && cd -",
+    "nexe-mac": "mkdir -p bin/nexe && nexe bin/vvsh.js -r dist/main.js -t macos -o bin/nexe/vvsh.mac.exe && cd bin/nexe && zip vvsh.mac.exe.zip vvsh.mac.exe && cd -",
+    "nexe-linux": "mkdir -p bin/nexe && nexe bin/vvsh.js -r dist/main.js -t linux -o bin/nexe/vvsh.linux.exe && cd bin/nexe && zip vvsh.linux.exe.zip vvsh.linux.exe && cd -",
+    "nexe-win": "mkdir -p bin/nexe && nexe bin/vvsh.js -r dist/main.js -t win -o bin/nexe/vvsh.win.exe && cd bin/nexe && zip vvsh.win.exe.zip vvsh.win.exe && cd -",
+    "nexe-all": "npm run tsc && rm -rf bin/nexe && npm run nexe-mac && npm run nexe-linux && npm run nexe-win;",
+    "lintfix": "tslint --fix --project .",
+    "lintfix1": "tslintlevel=1 tslint --fix --project .; exit 0",
+    "lintfix2": "tslintlevel=2 tslint --fix --project .; exit 0",
+    "pubpub": "npm run tsc && npm publish --access public",
+    "tsc": "rm -rf dist && tsc && tsc -d",
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwinjhlee/vvsh.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edwinjhlee/vvsh/issues"
+  },
+  "homepage": "https://github.com/edwinjhlee/vvsh#readme",
+  "dependencies": {
+    "@types/fs-extra": "^7.0.0",
+    "@types/koa": "^2.0.48",
+    "@types/koa-router": "^7.0.38",
+    "@types/node": "^12.0.3",
+    "@types/unzip": "^0.1.1",
+    "@typeshell/env": "latest",
+    "@typeshell/repl3": "^1.0.3",
+    "@utilx/app": "0.0.4",
+    "@utilx/process": "0.0.9",
+    "axios": "^0.18.0",
+    "fs-extra": "^8.0.1",
+    "koa": "^2.6.2",
+    "koa-body": "^4.0.6",
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.11",
+    "natives": "^1.1.6",
+    "npm": "^6.9.2",
+    "require": "^2.4.20",
+    "ts-node": "^8.2.0",
+    "typescript": "^3.2.4",
+    "unzip": "^0.1.11",
+    "vvkv": "0.0.14"
+  },
+  "devDependencies": {
+    "@utilx/tslint-rules": "latest",
+    "ts-lint": "^4.5.1",
+    "typescript-formatter": "^7.2.2"
+  },
+  "pkg": {
+    "assets": [
+      "package.json"
+    ]
+  }
+}
