@@ -37,7 +37,7 @@ dist.arch(){
         OUTPUT=x-installer.$GOOS-$GOARCH.exe
     fi
     go build -ldflags="-s -w" -o "./dist/$OUTPUT" ./src/xmain/*.go
-    upx "./dist/$OUTPUT"
+    # upx "./dist/$OUTPUT"
 }
 
 dist.all(){
