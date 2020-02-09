@@ -9,11 +9,12 @@ import (
 ReadToken get token from vvkv folder
 */
 func ReadToken() string {
-	bytes, err := ioutil.ReadFile(XPath + "/TOKEN")
+	path := XPath + "/TOKEN"
+	bytes, err := ioutil.ReadFile(path)
 	if err != nil {
 		// panic(err)
 		// TODO: add debug log
-		log.Infoln("No token found in the local environment.")
+		log.WithField("path", path).Debugln("No token found in the local environment.")
 		return ""
 	}
 	return string(bytes)
@@ -29,5 +30,5 @@ func WriteTokenSync(tokenStr string) {
 			panic(err)
 		}
 	*/
-	ut.WriteFileSync(AppDirPath+"/TOKEN", tokenStr)
+	ut.WriteFileSync(XPath+"/TOKEN", tokenStr)
 }

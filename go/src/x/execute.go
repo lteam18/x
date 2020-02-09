@@ -15,7 +15,11 @@ func execute(args ...string) *exec.Cmd {
 	path := args[1]
 
 	if isHTTPURL(path) {
-		return ut.Execute("xmain", args)
+		cmd, err := ut.Execute("xmain", args)
+		if err != nil {
+			return nil
+		}
+		return cmd
 	}
 
 	// if local-file-path
@@ -26,5 +30,9 @@ func execute(args ...string) *exec.Cmd {
 
 	// read PREFIX files, try one by one: very slow
 
-	return ut.Execute(cmd, args[1:])
+	c, e := ut.Execute(cmd, args[1:])
+	if e != nil {
+		return nil
+	}
+	return c
 }

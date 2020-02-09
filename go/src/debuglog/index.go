@@ -7,8 +7,27 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+var debugComponentSet = make(map[string]bool)
+
+func init() {
+	debugEnv, _ := os.LookupEnv("DEBUG")
+	for _, v := range strings.Split(debugEnv, ":") {
+		v1 := strings.TrimSpace(v)
+		v1 = strings.ToLower(v1)
+		debugComponentSet[v1] = true
+	}
+}
+
 /*
-CreateDebugLogger a
+IsDebug g
+*/
+func IsDebug(com string) bool {
+	_, ok := debugComponentSet[com]
+	return ok
+}
+
+/*
+Create a
 */
 func Create(name string) *logrus.Logger {
 
@@ -21,21 +40,10 @@ func Create(name string) *logrus.Logger {
 		},
 	}
 
-	debugEnv, ok := os.LookupEnv("DEBUG")
-
-	if ok {
-		itemList := strings.Split(debugEnv, ";")
-		for _, v := range itemList {
-			v1 := strings.TrimSpace(v)
-			if name == strings.ToLower(v1) {
-				logger.SetLevel(logrus.DebugLevel)
-				return logger
-			}
-		}
+	if IsDebug(name) {
+		logger.SetLevel(logrus.DebugLevel)
+	} else {
+		logger.SetLevel(logrus.InfoLevel)
 	}
-
-	logger.SetLevel(logrus.WarnLevel)
-
 	return logger
-
 }

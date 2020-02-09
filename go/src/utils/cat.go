@@ -1,8 +1,8 @@
 package ut
 
 import (
-	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 /*
@@ -12,6 +12,7 @@ func Cat(filepathList ...string) {
 	for _, filepath := range filepathList {
 		dat, err := ioutil.ReadFile(filepath)
 		PanicError(err)
-		fmt.Print(string(dat))
+		// fmt.Print(string(dat))
+		os.Stdout.Write(dat)
 	}
 }

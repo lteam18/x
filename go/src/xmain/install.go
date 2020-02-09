@@ -41,7 +41,7 @@ func install(targetFolder *string, execName *string) {
 		normalizeFolder(targetFolder),
 		normalizeExecName(execName),
 	)
-	println("Installing x to: " + newFilePath)
+	log.Infoln("Installing x to: " + newFilePath)
 
 	installToDst(newFilePath)
 }
@@ -50,10 +50,10 @@ func installToDst(newFilePath string) {
 	curFilePath, _ := os.Executable()
 	err := ut.CopyFile(curFilePath, newFilePath)
 	if nil != err {
-		println("Try to install in **sudo** mode.")
+		log.Infoln("Try to install in **sudo** mode.")
 		log.Panicln("Error", err)
 	}
-	println("Install success.")
+	log.Infoln("Install success.")
 }
 
 var noshexe = nosh.Create(path.Join(vvkv.XPath, "bin", "nosh"))

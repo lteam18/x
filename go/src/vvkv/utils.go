@@ -2,6 +2,7 @@ package vvkv
 
 import (
 	"debuglog"
+	"os"
 	"os/user"
 	"path"
 	"strings"
@@ -19,9 +20,16 @@ func getHomeDir() string {
 }
 
 /*
-AppPath Pre
+XPath Pre
 */
-var XPath = path.Clean(getHomeDir() + "/.vvx")
+var XPath = path.Clean(getHomeDir() + "/.x-cmd.com")
+
+func init() {
+	e := os.Getenv("VVKV_STORAGE_PATH")
+	if e != "" {
+		XPath = path.Clean(e)
+	}
+}
 
 /*
 AppDirPath Pre

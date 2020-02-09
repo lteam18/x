@@ -19,6 +19,7 @@ func Engine(lang string) string {
 	return prefix + lang
 }
 
+var engineWhich = Engine("which")
 var engineCat = Engine("cat")
 var engineAuto = Engine("auto")
 
@@ -37,6 +38,7 @@ func init() {
 
 	SubCmd2Runtime["node"] = Engine("node")
 	SubCmd2Runtime["cat"] = Engine("cat")
+	SubCmd2Runtime["which"] = Engine("which")
 
 	// shortcut
 	SubCmd2Runtime["py"] = SubCmd2Runtime["python"]
@@ -91,7 +93,7 @@ func ExecuteBySubCmd(subCmd string, args []string) bool {
 		updateFirst = true
 	}
 	engine, ok := SubCmd2Runtime[subCmd]
-	log.WithField("subcmd", subCmd).WithField("engine", engine).Infoln("subcmd ready")
+	log.WithField("subcmd", subCmd).WithField("engine", engine).Debugln("subcmd ready")
 	if ok {
 		// What if subCmd is empty, just open the REPL perhaps ?
 		return ExecuteURIWithComplement(updateFirst, true, engine, args)
